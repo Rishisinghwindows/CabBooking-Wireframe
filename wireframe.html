@@ -1,0 +1,1686 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Driver Booking App - Wireframe</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: 'Segoe UI', -apple-system, BlinkMacSystemFont, sans-serif; background: #f0f2f5; color: #1a1a2e; }
+
+        /* Top Navigation */
+        .top-nav {
+            background: linear-gradient(135deg, #1a73e8, #0d47a1);
+            padding: 16px 32px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 1000;
+            box-shadow: 0 2px 12px rgba(0,0,0,0.15);
+        }
+        .top-nav h1 { color: #fff; font-size: 22px; font-weight: 700; letter-spacing: -0.5px; }
+        .top-nav h1 span { font-weight: 300; opacity: 0.8; font-size: 14px; margin-left: 8px; }
+
+        .app-tabs {
+            display: flex;
+            gap: 4px;
+            background: rgba(255,255,255,0.15);
+            border-radius: 12px;
+            padding: 4px;
+        }
+        .app-tab {
+            padding: 10px 24px;
+            border: none;
+            background: transparent;
+            color: rgba(255,255,255,0.7);
+            font-size: 14px;
+            font-weight: 500;
+            cursor: pointer;
+            border-radius: 10px;
+            transition: all 0.3s ease;
+        }
+        .app-tab:hover { color: #fff; background: rgba(255,255,255,0.1); }
+        .app-tab.active { background: #fff; color: #1a73e8; font-weight: 600; box-shadow: 0 2px 8px rgba(0,0,0,0.1); }
+
+        /* Phone Frame */
+        .app-container {
+            display: flex;
+            justify-content: center;
+            align-items: flex-start;
+            gap: 40px;
+            padding: 100px 32px 60px;
+            flex-wrap: wrap;
+        }
+        .phone-wrapper {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 16px;
+        }
+        .phone-label {
+            font-size: 13px;
+            font-weight: 600;
+            color: #5f6368;
+            text-transform: uppercase;
+            letter-spacing: 1.5px;
+        }
+        .phone {
+            width: 375px;
+            height: 780px;
+            background: #fff;
+            border-radius: 44px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.15), 0 0 0 2px #d1d5db;
+            overflow: hidden;
+            position: relative;
+        }
+        .phone::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 150px;
+            height: 28px;
+            background: #1a1a2e;
+            border-radius: 0 0 20px 20px;
+            z-index: 10;
+        }
+        .phone-screen {
+            height: 100%;
+            overflow-y: auto;
+            scrollbar-width: none;
+        }
+        .phone-screen::-webkit-scrollbar { display: none; }
+
+        /* Status Bar */
+        .status-bar {
+            background: linear-gradient(135deg, #1a73e8, #0d47a1);
+            padding: 36px 24px 8px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            color: #fff;
+            font-size: 12px;
+            font-weight: 600;
+        }
+        .status-bar-dark {
+            background: linear-gradient(135deg, #263238, #37474f);
+        }
+        .status-bar-green {
+            background: linear-gradient(135deg, #2e7d32, #1b5e20);
+        }
+        .status-icons { display: flex; gap: 6px; align-items: center; }
+
+        /* App Header */
+        .app-header {
+            background: linear-gradient(135deg, #1a73e8, #0d47a1);
+            padding: 12px 20px 16px;
+            color: #fff;
+        }
+        .app-header-dark {
+            background: linear-gradient(135deg, #263238, #37474f);
+        }
+        .app-header-green {
+            background: linear-gradient(135deg, #2e7d32, #1b5e20);
+        }
+        .app-header h2 { font-size: 20px; font-weight: 700; }
+        .app-header p { font-size: 12px; opacity: 0.8; margin-top: 2px; }
+
+        /* Screen Navigation */
+        .screen-nav {
+            display: flex;
+            overflow-x: auto;
+            background: #fff;
+            border-bottom: 1px solid #e8eaed;
+            scrollbar-width: none;
+        }
+        .screen-nav::-webkit-scrollbar { display: none; }
+        .screen-btn {
+            padding: 12px 16px;
+            border: none;
+            background: transparent;
+            color: #5f6368;
+            font-size: 12px;
+            font-weight: 500;
+            cursor: pointer;
+            white-space: nowrap;
+            border-bottom: 2px solid transparent;
+            transition: all 0.2s;
+        }
+        .screen-btn:hover { color: #1a73e8; }
+        .screen-btn.active { color: #1a73e8; border-bottom-color: #1a73e8; font-weight: 600; }
+        .screen-btn-dark.active { color: #37474f; border-bottom-color: #37474f; }
+        .screen-btn-green.active { color: #2e7d32; border-bottom-color: #2e7d32; }
+
+        /* Screen Content */
+        .screen { display: none; padding: 0; }
+        .screen.active { display: block; }
+
+        /* Common Components */
+        .search-bar {
+            margin: 16px;
+            padding: 12px 16px;
+            background: #f1f3f4;
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-size: 14px;
+            color: #80868b;
+        }
+        .search-bar svg { flex-shrink: 0; }
+
+        .card {
+            margin: 12px 16px;
+            background: #fff;
+            border-radius: 16px;
+            padding: 16px;
+            box-shadow: 0 1px 4px rgba(0,0,0,0.08);
+            border: 1px solid #e8eaed;
+        }
+
+        .map-placeholder {
+            background: linear-gradient(135deg, #e8f5e9, #c8e6c9);
+            height: 200px;
+            margin: 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            color: #2e7d32;
+            font-size: 14px;
+            position: relative;
+            overflow: hidden;
+        }
+        .map-placeholder::before {
+            content: '';
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            background: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M30 5 L55 50 L5 50 Z' fill='none' stroke='%2381c784' stroke-width='0.5'/%3E%3C/svg%3E") repeat;
+            opacity: 0.3;
+        }
+        .map-placeholder svg { z-index: 1; margin-bottom: 8px; }
+        .map-placeholder span { z-index: 1; font-weight: 600; }
+
+        .map-pin {
+            position: absolute;
+            width: 16px;
+            height: 16px;
+            background: #1a73e8;
+            border-radius: 50%;
+            border: 3px solid #fff;
+            box-shadow: 0 2px 6px rgba(0,0,0,0.3);
+            z-index: 2;
+        }
+        .map-pin.driver {
+            background: #34a853;
+            width: 12px;
+            height: 12px;
+        }
+
+        .btn {
+            padding: 14px 24px;
+            border: none;
+            border-radius: 12px;
+            font-size: 15px;
+            font-weight: 600;
+            cursor: pointer;
+            width: 100%;
+            transition: all 0.2s;
+        }
+        .btn-primary { background: #1a73e8; color: #fff; }
+        .btn-primary:hover { background: #1557b0; }
+        .btn-green { background: #34a853; color: #fff; }
+        .btn-green:hover { background: #2d9249; }
+        .btn-dark { background: #263238; color: #fff; }
+        .btn-dark:hover { background: #37474f; }
+        .btn-outline { background: transparent; border: 2px solid #dadce0; color: #5f6368; }
+        .btn-outline:hover { border-color: #1a73e8; color: #1a73e8; }
+        .btn-danger { background: #ea4335; color: #fff; }
+        .btn-sm { padding: 8px 16px; font-size: 13px; width: auto; border-radius: 8px; }
+        .btn-xs { padding: 6px 12px; font-size: 11px; width: auto; border-radius: 6px; }
+
+        .input-field {
+            width: 100%;
+            padding: 14px 16px;
+            border: 1.5px solid #dadce0;
+            border-radius: 10px;
+            font-size: 14px;
+            background: #fff;
+            outline: none;
+            margin-bottom: 12px;
+            color: #333;
+        }
+        .input-field:focus { border-color: #1a73e8; }
+        .input-field::placeholder { color: #9aa0a6; }
+
+        .input-label {
+            font-size: 12px;
+            font-weight: 600;
+            color: #5f6368;
+            margin-bottom: 6px;
+            display: block;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .divider { height: 1px; background: #e8eaed; margin: 12px 0; }
+
+        .badge {
+            display: inline-block;
+            padding: 4px 10px;
+            border-radius: 20px;
+            font-size: 11px;
+            font-weight: 600;
+        }
+        .badge-blue { background: #e8f0fe; color: #1a73e8; }
+        .badge-green { background: #e6f4ea; color: #34a853; }
+        .badge-orange { background: #fef7e0; color: #f9ab00; }
+        .badge-red { background: #fce8e6; color: #ea4335; }
+        .badge-gray { background: #f1f3f4; color: #5f6368; }
+
+        .avatar {
+            width: 44px;
+            height: 44px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 18px;
+            font-weight: 700;
+            color: #fff;
+            flex-shrink: 0;
+        }
+        .avatar-blue { background: linear-gradient(135deg, #1a73e8, #4285f4); }
+        .avatar-green { background: linear-gradient(135deg, #34a853, #4caf50); }
+        .avatar-orange { background: linear-gradient(135deg, #f9ab00, #ff9800); }
+        .avatar-purple { background: linear-gradient(135deg, #7b1fa2, #9c27b0); }
+
+        /* Bottom Nav */
+        .bottom-nav {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: #fff;
+            display: flex;
+            justify-content: space-around;
+            padding: 8px 0 24px;
+            border-top: 1px solid #e8eaed;
+        }
+        .nav-item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 4px;
+            font-size: 10px;
+            color: #80868b;
+            cursor: pointer;
+        }
+        .nav-item.active { color: #1a73e8; }
+        .nav-item.active-green { color: #2e7d32; }
+        .nav-item.active-dark { color: #263238; }
+        .nav-item svg { width: 22px; height: 22px; }
+
+        /* Trip Type Selector */
+        .trip-toggle {
+            display: flex;
+            background: #f1f3f4;
+            border-radius: 10px;
+            padding: 4px;
+            margin: 16px;
+        }
+        .trip-toggle-btn {
+            flex: 1;
+            padding: 10px;
+            border: none;
+            background: transparent;
+            font-size: 13px;
+            font-weight: 500;
+            color: #5f6368;
+            cursor: pointer;
+            border-radius: 8px;
+            transition: all 0.2s;
+        }
+        .trip-toggle-btn.active {
+            background: #1a73e8;
+            color: #fff;
+            font-weight: 600;
+            box-shadow: 0 2px 6px rgba(26,115,232,0.3);
+        }
+
+        /* Fare Card */
+        .fare-row {
+            display: flex;
+            justify-content: space-between;
+            padding: 8px 0;
+            font-size: 13px;
+        }
+        .fare-row .label { color: #5f6368; }
+        .fare-row .value { font-weight: 600; color: #202124; }
+        .fare-total {
+            display: flex;
+            justify-content: space-between;
+            padding: 12px 0 0;
+            margin-top: 8px;
+            border-top: 2px solid #e8eaed;
+            font-size: 16px;
+            font-weight: 700;
+        }
+        .fare-total .value { color: #1a73e8; }
+
+        /* Status Steps */
+        .status-step {
+            display: flex;
+            gap: 14px;
+            padding: 12px 0;
+        }
+        .status-dot-wrapper {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        .status-dot {
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+            border: 3px solid #dadce0;
+            flex-shrink: 0;
+        }
+        .status-dot.completed { background: #34a853; border-color: #34a853; }
+        .status-dot.current { background: #1a73e8; border-color: #1a73e8; box-shadow: 0 0 0 4px #e8f0fe; }
+        .status-line {
+            width: 2px;
+            flex: 1;
+            background: #dadce0;
+            min-height: 20px;
+        }
+        .status-line.completed { background: #34a853; }
+        .status-info h4 { font-size: 14px; font-weight: 600; color: #202124; }
+        .status-info p { font-size: 12px; color: #5f6368; margin-top: 2px; }
+
+        /* Stars */
+        .stars { display: flex; gap: 4px; }
+        .star { font-size: 24px; color: #dadce0; cursor: pointer; }
+        .star.filled { color: #f9ab00; }
+
+        /* Ride Card */
+        .ride-card {
+            margin: 8px 16px;
+            background: #fff;
+            border-radius: 14px;
+            padding: 14px 16px;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.06);
+            border: 1px solid #e8eaed;
+            display: flex;
+            gap: 12px;
+            align-items: center;
+        }
+        .ride-card-info { flex: 1; }
+        .ride-card-info h4 { font-size: 14px; font-weight: 600; }
+        .ride-card-info p { font-size: 12px; color: #5f6368; margin-top: 2px; }
+
+        /* Dashboard Card */
+        .dash-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 10px;
+            padding: 16px;
+        }
+        .dash-card {
+            background: #fff;
+            border-radius: 14px;
+            padding: 16px;
+            border: 1px solid #e8eaed;
+            text-align: center;
+        }
+        .dash-card .number {
+            font-size: 28px;
+            font-weight: 800;
+            margin-bottom: 4px;
+        }
+        .dash-card .label {
+            font-size: 11px;
+            color: #5f6368;
+            font-weight: 500;
+        }
+
+        /* OTP */
+        .otp-container {
+            display: flex;
+            gap: 10px;
+            justify-content: center;
+            margin: 20px 0;
+        }
+        .otp-box {
+            width: 48px;
+            height: 56px;
+            border: 2px solid #dadce0;
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 22px;
+            font-weight: 700;
+            color: #1a73e8;
+        }
+        .otp-box.filled { border-color: #1a73e8; background: #e8f0fe; }
+
+        /* Section Title inside screen */
+        .section-title {
+            font-size: 16px;
+            font-weight: 700;
+            color: #202124;
+            padding: 16px 16px 8px;
+        }
+
+        /* Payment Option */
+        .payment-option {
+            display: flex;
+            align-items: center;
+            gap: 14px;
+            padding: 14px 16px;
+            border: 1.5px solid #e8eaed;
+            border-radius: 12px;
+            margin: 8px 16px;
+            cursor: pointer;
+        }
+        .payment-option:hover { border-color: #1a73e8; }
+        .payment-option.selected { border-color: #1a73e8; background: #e8f0fe; }
+        .payment-icon {
+            width: 40px;
+            height: 40px;
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 18px;
+        }
+        .payment-option h4 { font-size: 14px; font-weight: 600; }
+        .payment-option p { font-size: 12px; color: #5f6368; }
+        .radio {
+            width: 20px;
+            height: 20px;
+            border: 2px solid #dadce0;
+            border-radius: 50%;
+            margin-left: auto;
+            flex-shrink: 0;
+        }
+        .radio.checked { border-color: #1a73e8; background: #1a73e8; box-shadow: inset 0 0 0 3px #fff; }
+
+        /* Notification Item */
+        .notif-item {
+            display: flex;
+            gap: 12px;
+            padding: 14px 16px;
+            border-bottom: 1px solid #f1f3f4;
+        }
+        .notif-dot {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            background: #1a73e8;
+            margin-top: 6px;
+            flex-shrink: 0;
+        }
+        .notif-dot.read { background: #dadce0; }
+
+        /* Profile Section */
+        .profile-header {
+            text-align: center;
+            padding: 24px;
+        }
+        .profile-avatar {
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+            margin: 0 auto 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 32px;
+            font-weight: 700;
+            color: #fff;
+        }
+        .profile-header h3 { font-size: 18px; font-weight: 700; }
+        .profile-header p { font-size: 13px; color: #5f6368; }
+
+        .profile-item {
+            display: flex;
+            align-items: center;
+            gap: 14px;
+            padding: 14px 20px;
+            border-bottom: 1px solid #f1f3f4;
+            cursor: pointer;
+        }
+        .profile-item:hover { background: #f8f9fa; }
+        .profile-item-icon {
+            width: 36px;
+            height: 36px;
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .profile-item span { flex: 1; font-size: 14px; font-weight: 500; }
+        .profile-item .arrow { color: #dadce0; font-size: 18px; }
+
+        /* Floating Action Button */
+        .fab {
+            position: absolute;
+            bottom: 80px;
+            right: 20px;
+            width: 56px;
+            height: 56px;
+            border-radius: 16px;
+            border: none;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 4px 16px rgba(0,0,0,0.2);
+            cursor: pointer;
+            font-size: 24px;
+            color: #fff;
+            z-index: 5;
+        }
+
+        /* Hide all app sections except active */
+        .app-section { display: none; }
+        .app-section.active { display: flex; }
+
+        /* Transaction item */
+        .txn-item {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 14px 16px;
+            border-bottom: 1px solid #f1f3f4;
+        }
+        .txn-item .txn-info { flex: 1; }
+        .txn-item h4 { font-size: 14px; font-weight: 600; }
+        .txn-item p { font-size: 12px; color: #5f6368; }
+        .txn-amount { font-size: 15px; font-weight: 700; }
+        .txn-amount.debit { color: #ea4335; }
+        .txn-amount.credit { color: #34a853; }
+
+        /* Responsive */
+        @media (max-width: 1200px) {
+            .app-container { gap: 24px; }
+        }
+        @media (max-width: 768px) {
+            .top-nav { padding: 12px 16px; flex-direction: column; gap: 12px; }
+            .app-tab { padding: 8px 16px; font-size: 12px; }
+            .phone { width: 340px; height: 720px; }
+        }
+    </style>
+</head>
+<body>
+    <!-- Top Navigation -->
+    <nav class="top-nav">
+        <h1>CabBooking <span>Wireframe</span></h1>
+        <div class="app-tabs">
+            <button class="app-tab active" onclick="switchApp('rider')">Rider App</button>
+            <button class="app-tab" onclick="switchApp('driver')">Driver App</button>
+            <button class="app-tab" onclick="switchApp('admin')">Admin App</button>
+        </div>
+    </nav>
+
+    <!-- ============ RIDER APP ============ -->
+    <div class="app-section active" id="rider-app">
+        <div class="app-container">
+            <!-- Phone 1: Main Screens -->
+            <div class="phone-wrapper">
+                <span class="phone-label">Main Flow</span>
+                <div class="phone">
+                    <div class="phone-screen">
+                        <div class="status-bar">
+                            <span>9:41</span>
+                            <div class="status-icons">
+                                <svg width="16" height="12" fill="white"><rect x="0" y="4" width="3" height="8" rx="1"/><rect x="4" y="2" width="3" height="10" rx="1"/><rect x="8" y="0" width="3" height="12" rx="1"/><rect x="12" y="3" width="3" height="9" rx="1"/></svg>
+                                <svg width="18" height="12" viewBox="0 0 18 12" fill="white"><rect x="0" y="0" width="16" height="12" rx="2" stroke="white" fill="none" stroke-width="1.5"/><rect x="16.5" y="3.5" width="1.5" height="5" rx="0.5"/><rect x="2" y="2" width="10" height="8" rx="1" fill="white"/></svg>
+                            </div>
+                        </div>
+                        <div class="app-header">
+                            <h2>CabBooking</h2>
+                            <p>Book a driver anywhere</p>
+                        </div>
+                        <div class="screen-nav" id="rider-main-nav">
+                            <button class="screen-btn active" onclick="showScreen('rider-main', 0)">Home</button>
+                            <button class="screen-btn" onclick="showScreen('rider-main', 1)">Login</button>
+                            <button class="screen-btn" onclick="showScreen('rider-main', 2)">OTP</button>
+                            <button class="screen-btn" onclick="showScreen('rider-main', 3)">Booking</button>
+                            <button class="screen-btn" onclick="showScreen('rider-main', 4)">Fare</button>
+                        </div>
+
+                        <!-- Home -->
+                        <div class="screen active" id="rider-main-0">
+                            <div class="map-placeholder" style="height: 220px;">
+                                <div class="map-pin" style="top: 90px; left: 160px;"></div>
+                                <div class="map-pin driver" style="top: 60px; left: 200px;"></div>
+                                <div class="map-pin driver" style="top: 120px; left: 120px;"></div>
+                                <div class="map-pin driver" style="top: 80px; left: 260px;"></div>
+                                <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#2e7d32" stroke-width="2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0118 0z"/><circle cx="12" cy="10" r="3"/></svg>
+                                <span>Google Maps View</span>
+                            </div>
+                            <div class="search-bar">
+                                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#80868b" stroke-width="2"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>
+                                Search pickup location...
+                            </div>
+                            <div style="padding: 0 16px;">
+                                <div style="display: flex; gap: 10px; margin-bottom: 12px;">
+                                    <button class="btn btn-primary" style="flex:1; padding: 12px; font-size: 14px;">
+                                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" style="vertical-align: middle; margin-right: 6px;"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg>
+                                        Hire Driver
+                                    </button>
+                                    <button class="btn btn-outline" style="flex:1; padding: 12px; font-size: 14px;">Other Services</button>
+                                </div>
+                            </div>
+                            <div class="section-title">Available Cities</div>
+                            <div style="display: flex; flex-wrap: wrap; gap: 8px; padding: 0 16px 100px;">
+                                <span class="badge badge-blue">Bangalore</span>
+                                <span class="badge badge-blue">Chennai</span>
+                                <span class="badge badge-blue">Hyderabad</span>
+                                <span class="badge badge-blue">Mumbai</span>
+                                <span class="badge badge-blue">Delhi</span>
+                                <span class="badge badge-blue">Pune</span>
+                            </div>
+                        </div>
+
+                        <!-- Login -->
+                        <div class="screen" id="rider-main-1">
+                            <div style="padding: 32px 20px; text-align: center;">
+                                <div style="width:64px; height:64px; background: linear-gradient(135deg, #1a73e8, #4285f4); border-radius: 16px; margin: 0 auto 16px; display:flex; align-items:center; justify-content:center;">
+                                    <svg width="32" height="32" viewBox="0 0 24 24" fill="white"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 3c1.66 0 3 1.34 3 3s-1.34 3-3 3-3-1.34-3-3 1.34-3 3-3zm0 14.2c-2.5 0-4.71-1.28-6-3.22.03-1.99 4-3.08 6-3.08 1.99 0 5.97 1.09 6 3.08-1.29 1.94-3.5 3.22-6 3.22z"/></svg>
+                                </div>
+                                <h3 style="font-size: 22px; margin-bottom: 4px;">Welcome!</h3>
+                                <p style="color: #5f6368; font-size: 14px; margin-bottom: 28px;">Sign up or login to continue</p>
+                                <div style="text-align: left;">
+                                    <label class="input-label">Full Name</label>
+                                    <input class="input-field" placeholder="Enter your name" value="Rishi">
+                                    <label class="input-label">Phone Number</label>
+                                    <input class="input-field" placeholder="+91 XXXXX XXXXX" value="+91 98765 43210">
+                                </div>
+                                <button class="btn btn-primary" style="margin-top: 8px;">Send OTP</button>
+                                <div class="divider" style="margin: 24px 0;"></div>
+                                <button class="btn btn-outline" style="margin-bottom: 10px;">
+                                    <span style="color: #4285f4; margin-right: 6px; font-size: 18px;">G</span> Continue with Google
+                                </button>
+                                <button class="btn btn-outline" style="background: #1877f2; color: #fff; border-color: #1877f2;">
+                                    <span style="margin-right: 6px;">f</span> Continue with Facebook
+                                </button>
+                            </div>
+                        </div>
+
+                        <!-- OTP -->
+                        <div class="screen" id="rider-main-2">
+                            <div style="padding: 40px 20px; text-align: center;">
+                                <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="#1a73e8" stroke-width="1.5"><rect x="5" y="2" width="14" height="20" rx="2"/><line x1="12" y1="18" x2="12" y2="18.01" stroke-width="2"/></svg>
+                                <h3 style="font-size: 20px; margin: 16px 0 4px;">Verify Phone</h3>
+                                <p style="color: #5f6368; font-size: 13px;">We sent a code to +91 98765 43210</p>
+                                <div class="otp-container">
+                                    <div class="otp-box filled">4</div>
+                                    <div class="otp-box filled">7</div>
+                                    <div class="otp-box filled">2</div>
+                                    <div class="otp-box">_</div>
+                                </div>
+                                <button class="btn btn-primary" style="margin-top: 16px;">Verify & Continue</button>
+                                <p style="color: #5f6368; font-size: 12px; margin-top: 16px;">Didn't receive? <span style="color: #1a73e8; font-weight: 600; cursor: pointer;">Resend OTP</span></p>
+                                <button class="btn btn-outline" style="margin-top: 12px; padding: 10px;">Cancel</button>
+                            </div>
+                        </div>
+
+                        <!-- Booking -->
+                        <div class="screen" id="rider-main-3">
+                            <div class="search-bar">
+                                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#34a853" stroke-width="2"><circle cx="12" cy="12" r="3"/><circle cx="12" cy="12" r="9" stroke-dasharray="4 3"/></svg>
+                                Jayanagar, Bangalore
+                            </div>
+                            <div class="trip-toggle">
+                                <button class="trip-toggle-btn active">Single Trip</button>
+                                <button class="trip-toggle-btn">Round Trip</button>
+                            </div>
+                            <div class="trip-toggle" style="margin-top: 0;">
+                                <button class="trip-toggle-btn active">Hours</button>
+                                <button class="trip-toggle-btn">Days</button>
+                            </div>
+                            <div class="card">
+                                <label class="input-label">Duration</label>
+                                <div style="display: flex; gap: 8px; margin-bottom: 14px;">
+                                    <div style="flex:1; padding: 10px; background: #e8f0fe; border-radius: 8px; text-align: center; font-weight: 600; color: #1a73e8; font-size: 14px;">3 Hours</div>
+                                </div>
+                                <label class="input-label">Date</label>
+                                <div style="padding: 10px; background: #f1f3f4; border-radius: 8px; margin-bottom: 14px; font-size: 14px; color: #333;">
+                                    Mar 25, 2026 (Today)
+                                </div>
+                                <label class="input-label">Time</label>
+                                <div style="padding: 10px; background: #f1f3f4; border-radius: 8px; margin-bottom: 14px; font-size: 14px; color: #333;">
+                                    10:30 AM (30 min from now)
+                                </div>
+                            </div>
+                            <div style="padding: 12px 16px 100px;">
+                                <button class="btn btn-primary">Search Drivers</button>
+                            </div>
+                        </div>
+
+                        <!-- Fare Estimation -->
+                        <div class="screen" id="rider-main-4">
+                            <div class="card" style="margin-top: 16px;">
+                                <h4 style="font-size: 16px; font-weight: 700; margin-bottom: 4px;">Fare Estimate</h4>
+                                <p style="font-size: 12px; color: #5f6368; margin-bottom: 14px;">Single Trip - 3 Hours</p>
+                                <div class="divider"></div>
+                                <div class="fare-row"><span class="label">Start Date</span><span class="value">Mar 25, 2026</span></div>
+                                <div class="fare-row"><span class="label">Start Time</span><span class="value">10:30 AM</span></div>
+                                <div class="fare-row"><span class="label">Location</span><span class="value">Jayanagar, BLR</span></div>
+                                <div class="divider"></div>
+                                <div class="fare-row"><span class="label">Per Hour Charge</span><span class="value">Rs 99</span></div>
+                                <div class="fare-row"><span class="label">Duration</span><span class="value">3 Hours</span></div>
+                                <div class="fare-row"><span class="label">Driver Charges</span><span class="value">Rs 3/km</span></div>
+                                <div class="fare-row"><span class="label">Extra Hour</span><span class="value">Rs 99/hr</span></div>
+                                <div class="fare-total">
+                                    <span>Total</span>
+                                    <span class="value">Rs 297</span>
+                                </div>
+                            </div>
+                            <div style="padding: 12px 16px; display: flex; gap: 10px;">
+                                <button class="btn btn-outline" style="flex:1;">Update</button>
+                                <button class="btn btn-primary" style="flex:2;">Confirm Booking</button>
+                            </div>
+                            <div class="card" style="background: #e6f4ea; border-color: #a8dab5;">
+                                <div style="display: flex; align-items: center; gap: 10px;">
+                                    <svg width="20" height="20" viewBox="0 0 24 24" fill="#34a853"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z"/></svg>
+                                    <div>
+                                        <h4 style="font-size: 14px; font-weight: 600; color: #1e8e3e;">Booking Ref: #CB3299</h4>
+                                        <p style="font-size: 12px; color: #5f6368;">Confirmed successfully</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Bottom Nav -->
+                    <div class="bottom-nav">
+                        <div class="nav-item active">
+                            <svg viewBox="0 0 24 24" fill="currentColor"><path d="M10 20v-6h4v6h5v-8h3L12 3 2 12h3v8z"/></svg>
+                            <span>Home</span>
+                        </div>
+                        <div class="nav-item">
+                            <svg viewBox="0 0 24 24" fill="currentColor"><path d="M19 3h-1V1h-2v2H8V1H6v2H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm0 16H5V8h14v11z"/></svg>
+                            <span>Bookings</span>
+                        </div>
+                        <div class="nav-item">
+                            <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 22c1.1 0 2-.9 2-2h-4c0 1.1.9 2 2 2zm6-6v-5c0-3.07-1.63-5.64-4.5-6.32V4c0-.83-.67-1.5-1.5-1.5s-1.5.67-1.5 1.5v.68C7.64 5.36 6 7.92 6 11v5l-2 2v1h16v-1l-2-2z"/></svg>
+                            <span>Alerts</span>
+                        </div>
+                        <div class="nav-item">
+                            <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 3c1.66 0 3 1.34 3 3s-1.34 3-3 3-3-1.34-3-3 1.34-3 3-3zm0 14.2c-2.5 0-4.71-1.28-6-3.22.03-1.99 4-3.08 6-3.08 1.99 0 5.97 1.09 6 3.08-1.29 1.94-3.5 3.22-6 3.22z"/></svg>
+                            <span>Profile</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Phone 2: Status & More -->
+            <div class="phone-wrapper">
+                <span class="phone-label">Status & Payments</span>
+                <div class="phone">
+                    <div class="phone-screen">
+                        <div class="status-bar">
+                            <span>9:41</span>
+                            <div class="status-icons">
+                                <svg width="16" height="12" fill="white"><rect x="0" y="4" width="3" height="8" rx="1"/><rect x="4" y="2" width="3" height="10" rx="1"/><rect x="8" y="0" width="3" height="12" rx="1"/><rect x="12" y="3" width="3" height="9" rx="1"/></svg>
+                                <svg width="18" height="12" viewBox="0 0 18 12" fill="white"><rect x="0" y="0" width="16" height="12" rx="2" stroke="white" fill="none" stroke-width="1.5"/><rect x="2" y="2" width="10" height="8" rx="1" fill="white"/></svg>
+                            </div>
+                        </div>
+                        <div class="app-header">
+                            <h2>My Booking</h2>
+                            <p>Request #CB3299</p>
+                        </div>
+                        <div class="screen-nav" id="rider-status-nav">
+                            <button class="screen-btn active" onclick="showScreen('rider-status', 0)">Status</button>
+                            <button class="screen-btn" onclick="showScreen('rider-status', 1)">Payment</button>
+                            <button class="screen-btn" onclick="showScreen('rider-status', 2)">Rate</button>
+                            <button class="screen-btn" onclick="showScreen('rider-status', 3)">History</button>
+                            <button class="screen-btn" onclick="showScreen('rider-status', 4)">Profile</button>
+                        </div>
+
+                        <!-- Status -->
+                        <div class="screen active" id="rider-status-0">
+                            <div style="padding: 20px 16px 100px;">
+                                <div class="status-step">
+                                    <div class="status-dot-wrapper">
+                                        <div class="status-dot completed"></div>
+                                        <div class="status-line completed"></div>
+                                    </div>
+                                    <div class="status-info">
+                                        <h4>Service Requested</h4>
+                                        <p>Mar 25, 10:30 AM - Driver Needed</p>
+                                    </div>
+                                </div>
+                                <div class="status-step">
+                                    <div class="status-dot-wrapper">
+                                        <div class="status-dot completed"></div>
+                                        <div class="status-line completed"></div>
+                                    </div>
+                                    <div class="status-info">
+                                        <h4>Request Received</h4>
+                                        <p>Searching for nearby driver...</p>
+                                    </div>
+                                </div>
+                                <div class="status-step">
+                                    <div class="status-dot-wrapper">
+                                        <div class="status-dot current"></div>
+                                        <div class="status-line"></div>
+                                    </div>
+                                    <div class="status-info">
+                                        <h4>Job Assigned</h4>
+                                        <p>Shyam Jaswal - 9362222322</p>
+                                        <button class="btn btn-sm btn-primary" style="margin-top: 8px; display: inline-flex; align-items: center; gap: 6px;">
+                                            <svg width="14" height="14" viewBox="0 0 24 24" fill="white"><path d="M6.62 10.79c1.44 2.83 3.76 5.14 6.59 6.59l2.2-2.2c.27-.27.67-.36 1.02-.24 1.12.37 2.33.57 3.57.57.55 0 1 .45 1 1V20c0 .55-.45 1-1 1-9.39 0-17-7.61-17-17 0-.55.45-1 1-1h3.5c.55 0 1 .45 1 1 0 1.25.2 2.45.57 3.57.11.35.03.74-.25 1.02l-2.2 2.2z"/></svg>
+                                            Call Driver
+                                        </button>
+                                    </div>
+                                </div>
+                                <div class="status-step">
+                                    <div class="status-dot-wrapper">
+                                        <div class="status-dot"></div>
+                                    </div>
+                                    <div class="status-info">
+                                        <h4 style="color: #80868b;">Job Completed</h4>
+                                        <p>Pending</p>
+                                    </div>
+                                </div>
+                                <div style="display: flex; gap: 8px; margin-top: 20px; flex-wrap: wrap;">
+                                    <button class="btn btn-xs btn-danger">Cancel</button>
+                                    <button class="btn btn-xs btn-outline">Update</button>
+                                    <button class="btn btn-xs btn-primary">Pay</button>
+                                    <button class="btn btn-xs btn-outline">Book Another</button>
+                                </div>
+
+                                <div style="margin-top: 20px; padding: 14px; background: #e8f0fe; border-radius: 12px;">
+                                    <p style="font-size: 12px; color: #5f6368; margin-bottom: 6px;">Share live trip</p>
+                                    <div style="display: flex; gap: 8px;">
+                                        <button class="btn btn-xs btn-primary">Share Link</button>
+                                        <button class="btn btn-xs btn-outline">WhatsApp</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Payment -->
+                        <div class="screen" id="rider-status-1">
+                            <div class="section-title">Select Payment Method</div>
+                            <div class="payment-option selected">
+                                <div class="payment-icon" style="background: #e8f0fe; color: #1a73e8;">
+                                    <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M20 4H4c-1.11 0-2 .89-2 2v12c0 1.11.89 2 2 2h16c1.11 0 2-.89 2-2V6c0-1.11-.89-2-2-2zm0 14H4v-6h16v6zm0-10H4V6h16v2z"/></svg>
+                                </div>
+                                <div style="flex:1;"><h4>Credit / Debit Card</h4><p>Visa, Mastercard, RuPay</p></div>
+                                <div class="radio checked"></div>
+                            </div>
+                            <div class="payment-option">
+                                <div class="payment-icon" style="background: #e6f4ea; color: #34a853;">
+                                    <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M4 10h3v7H4zm6.5 0h3v7h-3zM2 19h20v3H2zm15-9h3v7h-3zm-5-9L2 6v2h20V6z"/></svg>
+                                </div>
+                                <div style="flex:1;"><h4>Net Banking</h4><p>All major banks</p></div>
+                                <div class="radio"></div>
+                            </div>
+                            <div class="payment-option">
+                                <div class="payment-icon" style="background: #fef7e0; color: #f9ab00;">
+                                    <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 17h-2v-2h2v2zm0-4h-2V7h2v8z"/></svg>
+                                </div>
+                                <div style="flex:1;"><h4>Cash Payment</h4><p>Pay driver directly</p></div>
+                                <div class="radio"></div>
+                            </div>
+                            <div style="padding: 20px 16px;">
+                                <div class="card" style="margin: 0; background: #f8f9fa;">
+                                    <div class="fare-row"><span class="label">Amount</span><span class="value">Rs 297</span></div>
+                                    <div class="fare-row"><span class="label">Tax (GST 5%)</span><span class="value">Rs 14.85</span></div>
+                                    <div class="fare-total"><span>Pay</span><span class="value" style="color: #1a73e8;">Rs 311.85</span></div>
+                                </div>
+                                <button class="btn btn-primary" style="margin-top: 16px;">Pay Now</button>
+                            </div>
+                        </div>
+
+                        <!-- Rating -->
+                        <div class="screen" id="rider-status-2">
+                            <div style="padding: 40px 20px; text-align: center;">
+                                <div class="avatar avatar-green" style="width: 72px; height: 72px; margin: 0 auto 16px; font-size: 28px;">SJ</div>
+                                <h3 style="font-size: 18px;">Shyam Jaswal</h3>
+                                <p style="color: #5f6368; font-size: 13px; margin-bottom: 24px;">Trip completed - Rs 297</p>
+                                <p style="font-size: 14px; font-weight: 600; margin-bottom: 12px;">Rate your experience</p>
+                                <div class="stars" style="justify-content: center; margin-bottom: 24px;">
+                                    <span class="star filled">&#9733;</span>
+                                    <span class="star filled">&#9733;</span>
+                                    <span class="star filled">&#9733;</span>
+                                    <span class="star filled">&#9733;</span>
+                                    <span class="star">&#9733;</span>
+                                </div>
+                                <textarea class="input-field" placeholder="Write your feedback..." style="height: 100px; resize: none; margin-bottom: 16px;"></textarea>
+                                <button class="btn btn-primary" style="margin-bottom: 12px;">Submit Review</button>
+                                <button class="btn btn-outline">
+                                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#5f6368" stroke-width="2" style="vertical-align: middle; margin-right: 6px;"><path d="M4 12v8a2 2 0 002 2h12a2 2 0 002-2v-8M16 6l-4-4-4 4M12 2v13"/></svg>
+                                    Recommend Us
+                                </button>
+                            </div>
+                        </div>
+
+                        <!-- Transaction History -->
+                        <div class="screen" id="rider-status-3">
+                            <div class="section-title">Transaction History</div>
+                            <div class="txn-item">
+                                <div class="avatar avatar-blue" style="width:38px; height:38px; font-size: 14px;">SJ</div>
+                                <div class="txn-info">
+                                    <h4>Shyam Jaswal</h4>
+                                    <p>Mar 25, 10:30 AM - Jayanagar</p>
+                                    <p>Req #CB3299 <span class="badge badge-green" style="margin-left: 4px;">Done</span></p>
+                                </div>
+                                <span class="txn-amount debit">-Rs 297</span>
+                            </div>
+                            <div class="txn-item">
+                                <div class="avatar avatar-orange" style="width:38px; height:38px; font-size: 14px;">RR</div>
+                                <div class="txn-info">
+                                    <h4>Rakesh Rathi</h4>
+                                    <p>Mar 23, 2:00 PM - BTM Layout</p>
+                                    <p>Req #CB8042 <span class="badge badge-green" style="margin-left: 4px;">Done</span></p>
+                                </div>
+                                <span class="txn-amount debit">-Rs 499</span>
+                            </div>
+                            <div class="txn-item">
+                                <div class="avatar avatar-purple" style="width:38px; height:38px; font-size: 14px;">RM</div>
+                                <div class="txn-info">
+                                    <h4>Ramesh M</h4>
+                                    <p>Mar 20, 9:00 AM - Koramangala</p>
+                                    <p>Req #CB7810 <span class="badge badge-red" style="margin-left: 4px;">Cancelled</span></p>
+                                </div>
+                                <span class="txn-amount" style="color: #5f6368;">Rs 0</span>
+                            </div>
+                        </div>
+
+                        <!-- Profile -->
+                        <div class="screen" id="rider-status-4">
+                            <div class="profile-header">
+                                <div class="profile-avatar avatar-blue">R</div>
+                                <h3>Rishi</h3>
+                                <p>+91 98765 43210</p>
+                            </div>
+                            <div class="profile-item">
+                                <div class="profile-item-icon" style="background: #e8f0fe; color: #1a73e8;">
+                                    <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 3c1.66 0 3 1.34 3 3s-1.34 3-3 3-3-1.34-3-3 1.34-3 3-3zm0 14.2c-2.5 0-4.71-1.28-6-3.22.03-1.99 4-3.08 6-3.08 1.99 0 5.97 1.09 6 3.08-1.29 1.94-3.5 3.22-6 3.22z"/></svg>
+                                </div>
+                                <span>Edit Profile</span>
+                                <span class="arrow">&rsaquo;</span>
+                            </div>
+                            <div class="profile-item">
+                                <div class="profile-item-icon" style="background: #fef7e0; color: #f9ab00;">
+                                    <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M12 22c1.1 0 2-.9 2-2h-4c0 1.1.9 2 2 2zm6-6v-5c0-3.07-1.63-5.64-4.5-6.32V4c0-.83-.67-1.5-1.5-1.5s-1.5.67-1.5 1.5v.68C7.64 5.36 6 7.92 6 11v5l-2 2v1h16v-1l-2-2z"/></svg>
+                                </div>
+                                <span>Notifications</span>
+                                <span class="arrow">&rsaquo;</span>
+                            </div>
+                            <div class="profile-item">
+                                <div class="profile-item-icon" style="background: #e6f4ea; color: #34a853;">
+                                    <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm-2 10h-4v4h-2v-4H7v-2h4V7h2v4h4v2z"/></svg>
+                                </div>
+                                <span>Transaction History</span>
+                                <span class="arrow">&rsaquo;</span>
+                            </div>
+                            <div class="profile-item">
+                                <div class="profile-item-icon" style="background: #fce8e6; color: #ea4335;">
+                                    <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M10.09 15.59L11.5 17l5-5-5-5-1.41 1.41L12.67 11H3v2h9.67l-2.58 2.59zM19 3H5c-1.11 0-2 .9-2 2v4h2V5h14v14H5v-4H3v4c0 1.1.89 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2z"/></svg>
+                                </div>
+                                <span>Logout</span>
+                                <span class="arrow">&rsaquo;</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="bottom-nav">
+                        <div class="nav-item active">
+                            <svg viewBox="0 0 24 24" fill="currentColor"><path d="M10 20v-6h4v6h5v-8h3L12 3 2 12h3v8z"/></svg>
+                            <span>Home</span>
+                        </div>
+                        <div class="nav-item">
+                            <svg viewBox="0 0 24 24" fill="currentColor"><path d="M19 3h-1V1h-2v2H8V1H6v2H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm0 16H5V8h14v11z"/></svg>
+                            <span>Bookings</span>
+                        </div>
+                        <div class="nav-item">
+                            <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 22c1.1 0 2-.9 2-2h-4c0 1.1.9 2 2 2zm6-6v-5c0-3.07-1.63-5.64-4.5-6.32V4c0-.83-.67-1.5-1.5-1.5s-1.5.67-1.5 1.5v.68C7.64 5.36 6 7.92 6 11v5l-2 2v1h16v-1l-2-2z"/></svg>
+                            <span>Alerts</span>
+                        </div>
+                        <div class="nav-item">
+                            <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 3c1.66 0 3 1.34 3 3s-1.34 3-3 3-3-1.34-3-3 1.34-3 3-3zm0 14.2c-2.5 0-4.71-1.28-6-3.22.03-1.99 4-3.08 6-3.08 1.99 0 5.97 1.09 6 3.08-1.29 1.94-3.5 3.22-6 3.22z"/></svg>
+                            <span>Profile</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- ============ DRIVER APP ============ -->
+    <div class="app-section" id="driver-app">
+        <div class="app-container">
+            <!-- Phone 1: Registration & Requests -->
+            <div class="phone-wrapper">
+                <span class="phone-label">Registration & Requests</span>
+                <div class="phone">
+                    <div class="phone-screen">
+                        <div class="status-bar status-bar-dark">
+                            <span>9:41</span>
+                            <div class="status-icons">
+                                <svg width="16" height="12" fill="white"><rect x="0" y="4" width="3" height="8" rx="1"/><rect x="4" y="2" width="3" height="10" rx="1"/><rect x="8" y="0" width="3" height="12" rx="1"/><rect x="12" y="3" width="3" height="9" rx="1"/></svg>
+                                <svg width="18" height="12" viewBox="0 0 18 12" fill="white"><rect x="0" y="0" width="16" height="12" rx="2" stroke="white" fill="none" stroke-width="1.5"/><rect x="2" y="2" width="12" height="8" rx="1" fill="white"/></svg>
+                            </div>
+                        </div>
+                        <div class="app-header app-header-dark">
+                            <h2>Driver Portal</h2>
+                            <p>CabBooking Partner</p>
+                        </div>
+                        <div class="screen-nav" id="driver-main-nav">
+                            <button class="screen-btn screen-btn-dark active" onclick="showScreen('driver-main', 0)">Register</button>
+                            <button class="screen-btn screen-btn-dark" onclick="showScreen('driver-main', 1)">New Ride</button>
+                            <button class="screen-btn screen-btn-dark" onclick="showScreen('driver-main', 2)">Navigate</button>
+                            <button class="screen-btn screen-btn-dark" onclick="showScreen('driver-main', 3)">Trip</button>
+                        </div>
+
+                        <!-- Registration -->
+                        <div class="screen active" id="driver-main-0">
+                            <div style="padding: 20px;">
+                                <h3 style="font-size: 18px; margin-bottom: 4px;">Driver Registration</h3>
+                                <p style="font-size: 12px; color: #5f6368; margin-bottom: 16px;">Join our network of professional drivers</p>
+                                <label class="input-label">Full Name</label>
+                                <input class="input-field" placeholder="Enter full name" value="Shyam Jaswal">
+                                <label class="input-label">Phone</label>
+                                <input class="input-field" placeholder="+91 XXXXX XXXXX" value="+91 93622 22322">
+                                <label class="input-label">Email</label>
+                                <input class="input-field" placeholder="email@example.com">
+                                <label class="input-label">Address</label>
+                                <input class="input-field" placeholder="Full address">
+                                <label class="input-label">Experience</label>
+                                <input class="input-field" placeholder="Years of experience" value="5 Years">
+                                <label class="input-label">Specialization</label>
+                                <div style="display: flex; gap: 6px; flex-wrap: wrap; margin-bottom: 12px;">
+                                    <span class="badge badge-blue">Sedan</span>
+                                    <span class="badge badge-blue">SUV</span>
+                                    <span class="badge badge-gray">Hatchback</span>
+                                    <span class="badge badge-gray">Luxury</span>
+                                </div>
+                                <label class="input-label">Languages</label>
+                                <div style="display: flex; gap: 6px; flex-wrap: wrap; margin-bottom: 16px;">
+                                    <span class="badge badge-green">English</span>
+                                    <span class="badge badge-green">Hindi</span>
+                                    <span class="badge badge-green">Kannada</span>
+                                </div>
+                                <button class="btn btn-dark">Register</button>
+                                <p style="font-size: 11px; color: #5f6368; text-align: center; margin-top: 10px;">Registration subject to admin approval</p>
+                            </div>
+                        </div>
+
+                        <!-- New Ride Request -->
+                        <div class="screen" id="driver-main-1">
+                            <div class="card" style="margin-top: 16px; border-left: 4px solid #f9ab00;">
+                                <div style="display: flex; align-items: center; gap: 8px; margin-bottom: 10px;">
+                                    <span class="badge badge-orange">NEW REQUEST</span>
+                                    <span style="font-size: 12px; color: #5f6368; margin-left: auto;">Just now</span>
+                                </div>
+                                <div style="display: flex; gap: 12px; align-items: center; margin-bottom: 12px;">
+                                    <div class="avatar avatar-blue" style="width:44px; height:44px;">R</div>
+                                    <div>
+                                        <h4 style="font-size: 15px; font-weight: 600;">Rishi</h4>
+                                        <p style="font-size: 13px; color: #5f6368;">+91 98765 43210</p>
+                                    </div>
+                                </div>
+                                <div class="divider"></div>
+                                <div class="fare-row"><span class="label">Pickup</span><span class="value">Jayanagar, 4th Block</span></div>
+                                <div class="fare-row"><span class="label">Service Time</span><span class="value">10:30 AM</span></div>
+                                <div class="fare-row"><span class="label">Duration</span><span class="value">3 Hours</span></div>
+                                <div class="fare-row"><span class="label">Trip Type</span><span class="value">Single Trip</span></div>
+                                <div class="divider"></div>
+                                <div style="display: flex; gap: 10px; margin-top: 8px;">
+                                    <button class="btn btn-outline" style="flex:1; color: #ea4335; border-color: #ea4335;">Decline</button>
+                                    <button class="btn btn-dark" style="flex:2;">Accept Ride</button>
+                                </div>
+                            </div>
+                            <div class="card" style="opacity: 0.5;">
+                                <div style="display: flex; gap: 12px; align-items: center;">
+                                    <div class="avatar avatar-purple" style="width:40px; height:40px; font-size: 14px;">SM</div>
+                                    <div style="flex:1;">
+                                        <h4 style="font-size: 14px;">Sakthi Mani</h4>
+                                        <p style="font-size: 12px; color: #5f6368;">BTM Layout - 1:10 PM</p>
+                                    </div>
+                                    <span class="badge badge-green">Done</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Navigation -->
+                        <div class="screen" id="driver-main-2">
+                            <div class="map-placeholder" style="height: 280px;">
+                                <div class="map-pin" style="top: 200px; left: 100px;"></div>
+                                <div class="map-pin driver" style="top: 80px; left: 250px;"></div>
+                                <div style="position: absolute; top: 80px; left: 90px; right: 60px; height: 2px; background: #1a73e8; z-index:2; transform: rotate(25deg); border-radius: 2px; border: 1px dashed #1a73e8;"></div>
+                                <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#2e7d32" stroke-width="2"><path d="M12 2L4.5 20.29l.71.71L12 18l6.79 3 .71-.71z"/></svg>
+                                <span>Navigating to Rider</span>
+                            </div>
+                            <div class="card">
+                                <div style="display: flex; justify-content: space-between; align-items: center;">
+                                    <div>
+                                        <h4 style="font-size: 15px; font-weight: 600;">Rishi</h4>
+                                        <p style="font-size: 12px; color: #5f6368;">Jayanagar, 4th Block</p>
+                                    </div>
+                                    <div style="text-align: right;">
+                                        <p style="font-size: 22px; font-weight: 800; color: #263238;">12 min</p>
+                                        <p style="font-size: 12px; color: #5f6368;">3.2 km away</p>
+                                    </div>
+                                </div>
+                                <div style="display: flex; gap: 10px; margin-top: 14px;">
+                                    <button class="btn btn-outline btn-sm" style="flex:1;">
+                                        <svg width="14" height="14" viewBox="0 0 24 24" fill="#5f6368" style="vertical-align: middle; margin-right: 4px;"><path d="M6.62 10.79c1.44 2.83 3.76 5.14 6.59 6.59l2.2-2.2c.27-.27.67-.36 1.02-.24 1.12.37 2.33.57 3.57.57.55 0 1 .45 1 1V20c0 .55-.45 1-1 1-9.39 0-17-7.61-17-17 0-.55.45-1 1-1h3.5c.55 0 1 .45 1 1 0 1.25.2 2.45.57 3.57.11.35.03.74-.25 1.02l-2.2 2.2z"/></svg>
+                                        Call
+                                    </button>
+                                    <button class="btn btn-dark btn-sm" style="flex:1;">Navigate</button>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Trip Management -->
+                        <div class="screen" id="driver-main-3">
+                            <div class="card" style="margin-top: 16px; text-align: center;">
+                                <div class="avatar avatar-blue" style="width: 56px; height: 56px; margin: 0 auto 12px; font-size: 22px;">R</div>
+                                <h4 style="font-size: 16px;">Trip with Rishi</h4>
+                                <p style="font-size: 13px; color: #5f6368; margin-bottom: 16px;">Jayanagar → Destination</p>
+                                <div style="display: flex; justify-content: center; gap: 20px; margin-bottom: 16px;">
+                                    <div style="text-align: center;">
+                                        <p style="font-size: 24px; font-weight: 800; color: #263238;">1:23</p>
+                                        <p style="font-size: 11px; color: #5f6368;">Duration</p>
+                                    </div>
+                                    <div style="width: 1px; background: #e8eaed;"></div>
+                                    <div style="text-align: center;">
+                                        <p style="font-size: 24px; font-weight: 800; color: #263238;">8.4</p>
+                                        <p style="font-size: 11px; color: #5f6368;">KM</p>
+                                    </div>
+                                    <div style="width: 1px; background: #e8eaed;"></div>
+                                    <div style="text-align: center;">
+                                        <p style="font-size: 24px; font-weight: 800; color: #34a853;">Rs 297</p>
+                                        <p style="font-size: 11px; color: #5f6368;">Fare</p>
+                                    </div>
+                                </div>
+                                <div class="divider"></div>
+                                <div class="fare-row"><span class="label">Base (3 hrs x Rs 99)</span><span class="value">Rs 297</span></div>
+                                <div class="fare-row"><span class="label">Distance (8.4 km x Rs 3)</span><span class="value">Rs 25.20</span></div>
+                                <div class="fare-total"><span>Total Fare</span><span class="value" style="color: #34a853;">Rs 322.20</span></div>
+                            </div>
+                            <div style="padding: 12px 16px; display: flex; gap: 10px;">
+                                <button class="btn btn-outline" style="flex:1;">Start Trip</button>
+                                <button class="btn btn-dark" style="flex:2;">End Trip & Collect</button>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="bottom-nav">
+                        <div class="nav-item active-dark">
+                            <svg viewBox="0 0 24 24" fill="currentColor"><path d="M10 20v-6h4v6h5v-8h3L12 3 2 12h3v8z"/></svg>
+                            <span>Home</span>
+                        </div>
+                        <div class="nav-item">
+                            <svg viewBox="0 0 24 24" fill="currentColor"><path d="M19 3h-1V1h-2v2H8V1H6v2H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm0 16H5V8h14v11z"/></svg>
+                            <span>Jobs</span>
+                        </div>
+                        <div class="nav-item">
+                            <svg viewBox="0 0 24 24" fill="currentColor"><path d="M11.8 10.9c-2.27-.59-3-1.2-3-2.15 0-1.09 1.01-1.85 2.7-1.85 1.78 0 2.44.85 2.5 2.1h2.21c-.07-1.72-1.12-3.3-3.21-3.81V3h-3v2.16c-1.94.42-3.5 1.68-3.5 3.61 0 2.31 1.91 3.46 4.7 4.13 2.5.6 3 1.48 3 2.41 0 .69-.49 1.79-2.7 1.79-2.06 0-2.87-.92-2.98-2.1h-2.2c.12 2.19 1.76 3.42 3.68 3.83V21h3v-2.15c1.95-.37 3.5-1.5 3.5-3.55 0-2.84-2.43-3.81-4.7-4.4z"/></svg>
+                            <span>Earnings</span>
+                        </div>
+                        <div class="nav-item">
+                            <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 3c1.66 0 3 1.34 3 3s-1.34 3-3 3-3-1.34-3-3 1.34-3 3-3zm0 14.2c-2.5 0-4.71-1.28-6-3.22.03-1.99 4-3.08 6-3.08 1.99 0 5.97 1.09 6 3.08-1.29 1.94-3.5 3.22-6 3.22z"/></svg>
+                            <span>Profile</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Phone 2: Earnings & History -->
+            <div class="phone-wrapper">
+                <span class="phone-label">Earnings & History</span>
+                <div class="phone">
+                    <div class="phone-screen">
+                        <div class="status-bar status-bar-dark"><span>9:41</span><div class="status-icons"><svg width="16" height="12" fill="white"><rect x="0" y="4" width="3" height="8" rx="1"/><rect x="4" y="2" width="3" height="10" rx="1"/><rect x="8" y="0" width="3" height="12" rx="1"/><rect x="12" y="3" width="3" height="9" rx="1"/></svg></div></div>
+                        <div class="app-header app-header-dark">
+                            <h2>My Earnings</h2>
+                            <p>Shyam Jaswal</p>
+                        </div>
+                        <div style="padding: 20px 16px;">
+                            <div style="text-align: center; margin-bottom: 20px;">
+                                <p style="font-size: 12px; color: #5f6368; text-transform: uppercase; letter-spacing: 1px;">Total Earnings This Week</p>
+                                <p style="font-size: 36px; font-weight: 800; color: #34a853; margin: 4px 0;">Rs 4,850</p>
+                                <p style="font-size: 12px; color: #5f6368;">12 trips completed</p>
+                            </div>
+                            <div style="display: flex; gap: 10px; margin-bottom: 20px;">
+                                <div style="flex:1; text-align: center; padding: 14px; background: #f1f3f4; border-radius: 12px;">
+                                    <p style="font-size: 20px; font-weight: 700;">Rs 850</p>
+                                    <p style="font-size: 11px; color: #5f6368;">Today</p>
+                                </div>
+                                <div style="flex:1; text-align: center; padding: 14px; background: #f1f3f4; border-radius: 12px;">
+                                    <p style="font-size: 20px; font-weight: 700;">Rs 3,200</p>
+                                    <p style="font-size: 11px; color: #5f6368;">Settled</p>
+                                </div>
+                                <div style="flex:1; text-align: center; padding: 14px; background: #fef7e0; border-radius: 12px;">
+                                    <p style="font-size: 20px; font-weight: 700;">Rs 1,650</p>
+                                    <p style="font-size: 11px; color: #5f6368;">Pending</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="section-title">Recent Jobs</div>
+                        <div class="ride-card">
+                            <div class="avatar avatar-blue" style="width: 40px; height: 40px; font-size: 14px;">R</div>
+                            <div class="ride-card-info">
+                                <h4>Rishi <span class="badge badge-green" style="margin-left: 4px;">Done</span></h4>
+                                <p>Jayanagar - 3 hrs - Mar 25</p>
+                            </div>
+                            <span style="font-weight: 700; color: #34a853;">+Rs 322</span>
+                        </div>
+                        <div class="ride-card">
+                            <div class="avatar avatar-orange" style="width: 40px; height: 40px; font-size: 14px;">SM</div>
+                            <div class="ride-card-info">
+                                <h4>Sakthi M <span class="badge badge-green" style="margin-left: 4px;">Done</span></h4>
+                                <p>BTM Layout - 2 hrs - Mar 25</p>
+                            </div>
+                            <span style="font-weight: 700; color: #34a853;">+Rs 198</span>
+                        </div>
+                        <div class="ride-card">
+                            <div class="avatar avatar-purple" style="width: 40px; height: 40px; font-size: 14px;">AK</div>
+                            <div class="ride-card-info">
+                                <h4>Amit K <span class="badge badge-orange" style="margin-left: 4px;">Pending</span></h4>
+                                <p>Koramangala - 1 day - Mar 24</p>
+                            </div>
+                            <span style="font-weight: 700; color: #f9ab00;">+Rs 499</span>
+                        </div>
+                        <div class="ride-card" style="margin-bottom: 100px;">
+                            <div class="avatar avatar-green" style="width: 40px; height: 40px; font-size: 14px;">PV</div>
+                            <div class="ride-card-info">
+                                <h4>Priya V <span class="badge badge-red" style="margin-left: 4px;">Cancelled</span></h4>
+                                <p>Indiranagar - Mar 24</p>
+                            </div>
+                            <span style="font-weight: 700; color: #5f6368;">Rs 0</span>
+                        </div>
+                    </div>
+                    <div class="bottom-nav">
+                        <div class="nav-item">
+                            <svg viewBox="0 0 24 24" fill="currentColor"><path d="M10 20v-6h4v6h5v-8h3L12 3 2 12h3v8z"/></svg>
+                            <span>Home</span>
+                        </div>
+                        <div class="nav-item">
+                            <svg viewBox="0 0 24 24" fill="currentColor"><path d="M19 3h-1V1h-2v2H8V1H6v2H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm0 16H5V8h14v11z"/></svg>
+                            <span>Jobs</span>
+                        </div>
+                        <div class="nav-item active-dark">
+                            <svg viewBox="0 0 24 24" fill="currentColor"><path d="M11.8 10.9c-2.27-.59-3-1.2-3-2.15 0-1.09 1.01-1.85 2.7-1.85 1.78 0 2.44.85 2.5 2.1h2.21c-.07-1.72-1.12-3.3-3.21-3.81V3h-3v2.16c-1.94.42-3.5 1.68-3.5 3.61 0 2.31 1.91 3.46 4.7 4.13 2.5.6 3 1.48 3 2.41 0 .69-.49 1.79-2.7 1.79-2.06 0-2.87-.92-2.98-2.1h-2.2c.12 2.19 1.76 3.42 3.68 3.83V21h3v-2.15c1.95-.37 3.5-1.5 3.5-3.55 0-2.84-2.43-3.81-4.7-4.4z"/></svg>
+                            <span>Earnings</span>
+                        </div>
+                        <div class="nav-item">
+                            <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 3c1.66 0 3 1.34 3 3s-1.34 3-3 3-3-1.34-3-3 1.34-3 3-3zm0 14.2c-2.5 0-4.71-1.28-6-3.22.03-1.99 4-3.08 6-3.08 1.99 0 5.97 1.09 6 3.08-1.29 1.94-3.5 3.22-6 3.22z"/></svg>
+                            <span>Profile</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- ============ ADMIN APP ============ -->
+    <div class="app-section" id="admin-app">
+        <div class="app-container">
+            <!-- Phone 1: Dashboard & Requests -->
+            <div class="phone-wrapper">
+                <span class="phone-label">Dashboard & Requests</span>
+                <div class="phone">
+                    <div class="phone-screen">
+                        <div class="status-bar status-bar-green"><span>9:41</span><div class="status-icons"><svg width="16" height="12" fill="white"><rect x="0" y="4" width="3" height="8" rx="1"/><rect x="4" y="2" width="3" height="10" rx="1"/><rect x="8" y="0" width="3" height="12" rx="1"/><rect x="12" y="3" width="3" height="9" rx="1"/></svg></div></div>
+                        <div class="app-header app-header-green">
+                            <h2>Admin Console</h2>
+                            <p>CabBooking Management</p>
+                        </div>
+                        <div class="screen-nav" id="admin-main-nav">
+                            <button class="screen-btn screen-btn-green active" onclick="showScreen('admin-main', 0)">Dashboard</button>
+                            <button class="screen-btn screen-btn-green" onclick="showScreen('admin-main', 1)">Requests</button>
+                            <button class="screen-btn screen-btn-green" onclick="showScreen('admin-main', 2)">Drivers</button>
+                            <button class="screen-btn screen-btn-green" onclick="showScreen('admin-main', 3)">Payments</button>
+                        </div>
+
+                        <!-- Dashboard -->
+                        <div class="screen active" id="admin-main-0">
+                            <div class="dash-grid">
+                                <div class="dash-card">
+                                    <p class="number" style="color: #1a73e8;">54</p>
+                                    <p class="label">Total Requests</p>
+                                </div>
+                                <div class="dash-card">
+                                    <p class="number" style="color: #f9ab00;">12</p>
+                                    <p class="label">Open Requests</p>
+                                </div>
+                                <div class="dash-card">
+                                    <p class="number" style="color: #fa7b17;">8</p>
+                                    <p class="label">Pending</p>
+                                </div>
+                                <div class="dash-card">
+                                    <p class="number" style="color: #34a853;">34</p>
+                                    <p class="label">Completed</p>
+                                </div>
+                                <div class="dash-card">
+                                    <p class="number" style="color: #34a853;">Rs 18.5K</p>
+                                    <p class="label">Payments</p>
+                                </div>
+                                <div class="dash-card">
+                                    <p class="number" style="color: #ea4335;">3</p>
+                                    <p class="label">Negative Feedback</p>
+                                </div>
+                            </div>
+                            <div class="section-title">Recent Activity</div>
+                            <div class="notif-item">
+                                <div class="notif-dot"></div>
+                                <div style="flex: 1;">
+                                    <p style="font-size: 13px;"><b>New request</b> from Rishi - Jayanagar</p>
+                                    <p style="font-size: 11px; color: #5f6368;">2 min ago</p>
+                                </div>
+                            </div>
+                            <div class="notif-item">
+                                <div class="notif-dot"></div>
+                                <div style="flex: 1;">
+                                    <p style="font-size: 13px;"><b>Driver registered</b> - Vijay Kumar (pending approval)</p>
+                                    <p style="font-size: 11px; color: #5f6368;">15 min ago</p>
+                                </div>
+                            </div>
+                            <div class="notif-item">
+                                <div class="notif-dot read"></div>
+                                <div style="flex: 1;">
+                                    <p style="font-size: 13px;"><b>Trip completed</b> - Sakthi Mani, BTM Layout</p>
+                                    <p style="font-size: 11px; color: #5f6368;">1 hr ago</p>
+                                </div>
+                            </div>
+                            <div class="notif-item" style="margin-bottom: 80px;">
+                                <div class="notif-dot read"></div>
+                                <div style="flex: 1;">
+                                    <p style="font-size: 13px;"><b>Payment received</b> - Rs 600 from Req #8042</p>
+                                    <p style="font-size: 11px; color: #5f6368;">2 hrs ago</p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- All Requests -->
+                        <div class="screen" id="admin-main-1">
+                            <div class="search-bar">
+                                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#80868b" stroke-width="2"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>
+                                Search by ID, name, phone, status...
+                            </div>
+                            <div class="ride-card" style="border-left: 4px solid #f9ab00;">
+                                <div style="flex: 1;">
+                                    <div style="display: flex; align-items: center; gap: 6px;">
+                                        <h4 style="font-size: 14px;">Rishi</h4>
+                                        <span class="badge badge-orange">Open</span>
+                                    </div>
+                                    <p style="font-size: 12px; color: #5f6368;">+91 98765 43210</p>
+                                    <p style="font-size: 12px; color: #5f6368;">Jayanagar - 10:30 AM</p>
+                                    <p style="font-size: 11px; color: #80868b;">#CB3299</p>
+                                </div>
+                                <button class="btn btn-xs btn-green">Assign</button>
+                            </div>
+                            <div class="ride-card" style="border-left: 4px solid #1a73e8;">
+                                <div style="flex: 1;">
+                                    <div style="display: flex; align-items: center; gap: 6px;">
+                                        <h4 style="font-size: 14px;">Sakthi Mani</h4>
+                                        <span class="badge badge-blue">Assigned</span>
+                                    </div>
+                                    <p style="font-size: 12px; color: #5f6368;">+91 93462 52342</p>
+                                    <p style="font-size: 12px; color: #5f6368;">BTM Layout - 1:10 PM</p>
+                                    <p style="font-size: 11px; color: #80868b;">#CB3300</p>
+                                </div>
+                                <button class="btn btn-xs btn-outline">View</button>
+                            </div>
+                            <div class="ride-card" style="border-left: 4px solid #34a853;">
+                                <div style="flex: 1;">
+                                    <div style="display: flex; align-items: center; gap: 6px;">
+                                        <h4 style="font-size: 14px;">Ramesh</h4>
+                                        <span class="badge badge-green">Done</span>
+                                    </div>
+                                    <p style="font-size: 12px; color: #5f6368;">+91 99009 65780</p>
+                                    <p style="font-size: 12px; color: #5f6368;">BTM - 10:00 AM</p>
+                                    <p style="font-size: 11px; color: #80868b;">#CB3298</p>
+                                </div>
+                                <span style="font-weight: 700; color: #34a853; font-size: 13px;">Rs 800</span>
+                            </div>
+                        </div>
+
+                        <!-- Drivers -->
+                        <div class="screen" id="admin-main-2">
+                            <div class="section-title">Driver Management</div>
+                            <div class="card" style="border-left: 4px solid #f9ab00;">
+                                <div style="display: flex; gap: 12px; align-items: center;">
+                                    <div class="avatar avatar-orange" style="width: 44px; height: 44px;">VK</div>
+                                    <div style="flex: 1;">
+                                        <h4 style="font-size: 14px;">Vijay Kumar <span class="badge badge-orange">Pending</span></h4>
+                                        <p style="font-size: 12px; color: #5f6368;">5 yrs exp - Sedan, SUV</p>
+                                    </div>
+                                </div>
+                                <div style="display: flex; gap: 8px; margin-top: 12px;">
+                                    <button class="btn btn-xs btn-green">Approve</button>
+                                    <button class="btn btn-xs btn-danger">Reject</button>
+                                    <button class="btn btn-xs btn-outline">View Details</button>
+                                </div>
+                            </div>
+                            <div class="card">
+                                <div style="display: flex; gap: 12px; align-items: center;">
+                                    <div class="avatar avatar-green" style="width: 44px; height: 44px;">SJ</div>
+                                    <div style="flex: 1;">
+                                        <h4 style="font-size: 14px;">Shyam Jaswal <span class="badge badge-green">Active</span></h4>
+                                        <p style="font-size: 12px; color: #5f6368;">5 yrs exp - Rating: 4.5/5</p>
+                                        <p style="font-size: 11px; color: #80868b;">18 trips - Rs 6,200 earned</p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="card">
+                                <div style="display: flex; gap: 12px; align-items: center;">
+                                    <div class="avatar avatar-blue" style="width: 44px; height: 44px;">RR</div>
+                                    <div style="flex: 1;">
+                                        <h4 style="font-size: 14px;">Rakesh Rathi <span class="badge badge-green">Active</span></h4>
+                                        <p style="font-size: 12px; color: #5f6368;">3 yrs exp - Rating: 4.2/5</p>
+                                        <p style="font-size: 11px; color: #80868b;">12 trips - Rs 4,100 earned</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Payments -->
+                        <div class="screen" id="admin-main-3">
+                            <div style="padding: 16px; text-align: center;">
+                                <p style="font-size: 12px; color: #5f6368; text-transform: uppercase; letter-spacing: 1px;">Total Revenue</p>
+                                <p style="font-size: 32px; font-weight: 800; color: #2e7d32;">Rs 18,500</p>
+                            </div>
+                            <div style="display: flex; gap: 8px; padding: 0 16px 12px;">
+                                <div style="flex:1; text-align:center; padding: 10px; background: #e6f4ea; border-radius: 10px;">
+                                    <p style="font-size: 16px; font-weight: 700; color: #34a853;">Rs 12,400</p>
+                                    <p style="font-size: 10px; color: #5f6368;">Collected</p>
+                                </div>
+                                <div style="flex:1; text-align:center; padding: 10px; background: #fef7e0; border-radius: 10px;">
+                                    <p style="font-size: 16px; font-weight: 700; color: #f9ab00;">Rs 6,100</p>
+                                    <p style="font-size: 10px; color: #5f6368;">Pending</p>
+                                </div>
+                            </div>
+                            <div class="section-title">Payment History</div>
+                            <div class="txn-item">
+                                <div class="avatar avatar-green" style="width: 36px; height: 36px; font-size: 12px;">SJ</div>
+                                <div class="txn-info">
+                                    <h4>Shyam Jaswal</h4>
+                                    <p>Req #CB3299 - Mar 25</p>
+                                </div>
+                                <span class="txn-amount credit">Rs 600</span>
+                            </div>
+                            <div class="txn-item">
+                                <div class="avatar avatar-blue" style="width: 36px; height: 36px; font-size: 12px;">RR</div>
+                                <div class="txn-info">
+                                    <h4>Rakesh Rathi</h4>
+                                    <p>Req #CB3298 - Mar 25</p>
+                                </div>
+                                <span class="txn-amount credit">Rs 800</span>
+                            </div>
+                            <div class="txn-item" style="margin-bottom: 80px;">
+                                <div class="avatar avatar-orange" style="width: 36px; height: 36px; font-size: 12px;">SM</div>
+                                <div class="txn-info">
+                                    <h4>Sakthi Mani</h4>
+                                    <p>Req #CB3295 - Mar 24</p>
+                                </div>
+                                <span class="txn-amount credit">Rs 499</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="bottom-nav">
+                        <div class="nav-item active-green">
+                            <svg viewBox="0 0 24 24" fill="currentColor"><path d="M3 13h8V3H3v10zm0 8h8v-6H3v6zm10 0h8V11h-8v10zm0-18v6h8V3h-8z"/></svg>
+                            <span>Dashboard</span>
+                        </div>
+                        <div class="nav-item">
+                            <svg viewBox="0 0 24 24" fill="currentColor"><path d="M19 3h-1V1h-2v2H8V1H6v2H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm0 16H5V8h14v11z"/></svg>
+                            <span>Requests</span>
+                        </div>
+                        <div class="nav-item">
+                            <svg viewBox="0 0 24 24" fill="currentColor"><path d="M16 11c1.66 0 2.99-1.34 2.99-3S17.66 5 16 5c-1.66 0-3 1.34-3 3s1.34 3 3 3zm-8 0c1.66 0 2.99-1.34 2.99-3S9.66 5 8 5C6.34 5 5 6.34 5 8s1.34 3 3 3zm0 2c-2.33 0-7 1.17-7 3.5V19h14v-2.5c0-2.33-4.67-3.5-7-3.5zm8 0c-.29 0-.62.02-.97.05 1.16.84 1.97 1.97 1.97 3.45V19h6v-2.5c0-2.33-4.67-3.5-7-3.5z"/></svg>
+                            <span>Drivers</span>
+                        </div>
+                        <div class="nav-item">
+                            <svg viewBox="0 0 24 24" fill="currentColor"><path d="M11.8 10.9c-2.27-.59-3-1.2-3-2.15 0-1.09 1.01-1.85 2.7-1.85 1.78 0 2.44.85 2.5 2.1h2.21c-.07-1.72-1.12-3.3-3.21-3.81V3h-3v2.16c-1.94.42-3.5 1.68-3.5 3.61 0 2.31 1.91 3.46 4.7 4.13 2.5.6 3 1.48 3 2.41 0 .69-.49 1.79-2.7 1.79-2.06 0-2.87-.92-2.98-2.1h-2.2c.12 2.19 1.76 3.42 3.68 3.83V21h3v-2.15c1.95-.37 3.5-1.5 3.5-3.55 0-2.84-2.43-3.81-4.7-4.4z"/></svg>
+                            <span>Payments</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Phone 2: Reports -->
+            <div class="phone-wrapper">
+                <span class="phone-label">Reports & Analytics</span>
+                <div class="phone">
+                    <div class="phone-screen">
+                        <div class="status-bar status-bar-green"><span>9:41</span><div class="status-icons"><svg width="16" height="12" fill="white"><rect x="0" y="4" width="3" height="8" rx="1"/><rect x="4" y="2" width="3" height="10" rx="1"/><rect x="8" y="0" width="3" height="12" rx="1"/><rect x="12" y="3" width="3" height="9" rx="1"/></svg></div></div>
+                        <div class="app-header app-header-green">
+                            <h2>Reports</h2>
+                            <p>Analytics & Insights</p>
+                        </div>
+                        <div style="padding: 16px;">
+                            <!-- Mini Bar Chart -->
+                            <div class="card" style="margin: 0 0 12px;">
+                                <h4 style="font-size: 14px; margin-bottom: 12px;">Weekly Trips</h4>
+                                <div style="display: flex; align-items: flex-end; gap: 8px; height: 100px;">
+                                    <div style="flex:1; display: flex; flex-direction: column; align-items: center; gap: 4px;">
+                                        <div style="width: 100%; background: #c8e6c9; border-radius: 4px 4px 0 0; height: 40px;"></div>
+                                        <span style="font-size: 9px; color: #5f6368;">Mon</span>
+                                    </div>
+                                    <div style="flex:1; display: flex; flex-direction: column; align-items: center; gap: 4px;">
+                                        <div style="width: 100%; background: #81c784; border-radius: 4px 4px 0 0; height: 65px;"></div>
+                                        <span style="font-size: 9px; color: #5f6368;">Tue</span>
+                                    </div>
+                                    <div style="flex:1; display: flex; flex-direction: column; align-items: center; gap: 4px;">
+                                        <div style="width: 100%; background: #66bb6a; border-radius: 4px 4px 0 0; height: 50px;"></div>
+                                        <span style="font-size: 9px; color: #5f6368;">Wed</span>
+                                    </div>
+                                    <div style="flex:1; display: flex; flex-direction: column; align-items: center; gap: 4px;">
+                                        <div style="width: 100%; background: #4caf50; border-radius: 4px 4px 0 0; height: 80px;"></div>
+                                        <span style="font-size: 9px; color: #5f6368;">Thu</span>
+                                    </div>
+                                    <div style="flex:1; display: flex; flex-direction: column; align-items: center; gap: 4px;">
+                                        <div style="width: 100%; background: #43a047; border-radius: 4px 4px 0 0; height: 90px;"></div>
+                                        <span style="font-size: 9px; color: #5f6368;">Fri</span>
+                                    </div>
+                                    <div style="flex:1; display: flex; flex-direction: column; align-items: center; gap: 4px;">
+                                        <div style="width: 100%; background: #388e3c; border-radius: 4px 4px 0 0; height: 100px;"></div>
+                                        <span style="font-size: 9px; color: #5f6368;">Sat</span>
+                                    </div>
+                                    <div style="flex:1; display: flex; flex-direction: column; align-items: center; gap: 4px;">
+                                        <div style="width: 100%; background: #2e7d32; border-radius: 4px 4px 0 0; height: 55px;"></div>
+                                        <span style="font-size: 9px; color: #5f6368;">Sun</span>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="card" style="margin: 0 0 12px;">
+                                <h4 style="font-size: 14px; margin-bottom: 10px;">Key Metrics</h4>
+                                <div class="fare-row"><span class="label">Avg. Trip Duration</span><span class="value">2.4 hrs</span></div>
+                                <div class="fare-row"><span class="label">Avg. Revenue/Trip</span><span class="value">Rs 342</span></div>
+                                <div class="fare-row"><span class="label">Driver Utilization</span><span class="value">78%</span></div>
+                                <div class="fare-row"><span class="label">Cancellation Rate</span><span class="value" style="color: #ea4335;">8.2%</span></div>
+                                <div class="fare-row"><span class="label">Avg. Rating</span><span class="value" style="color: #f9ab00;">4.3 / 5</span></div>
+                            </div>
+
+                            <div class="card" style="margin: 0 0 12px;">
+                                <h4 style="font-size: 14px; margin-bottom: 10px;">Top Drivers</h4>
+                                <div style="display: flex; align-items: center; gap: 10px; padding: 8px 0; border-bottom: 1px solid #f1f3f4;">
+                                    <span style="font-size: 14px; font-weight: 700; color: #f9ab00; width: 20px;">1</span>
+                                    <div class="avatar avatar-green" style="width: 32px; height: 32px; font-size: 12px;">SJ</div>
+                                    <div style="flex:1;"><span style="font-size: 13px; font-weight: 600;">Shyam Jaswal</span></div>
+                                    <span style="font-size: 12px; color: #34a853; font-weight: 600;">18 trips</span>
+                                </div>
+                                <div style="display: flex; align-items: center; gap: 10px; padding: 8px 0; border-bottom: 1px solid #f1f3f4;">
+                                    <span style="font-size: 14px; font-weight: 700; color: #9e9e9e; width: 20px;">2</span>
+                                    <div class="avatar avatar-blue" style="width: 32px; height: 32px; font-size: 12px;">RR</div>
+                                    <div style="flex:1;"><span style="font-size: 13px; font-weight: 600;">Rakesh Rathi</span></div>
+                                    <span style="font-size: 12px; color: #34a853; font-weight: 600;">12 trips</span>
+                                </div>
+                                <div style="display: flex; align-items: center; gap: 10px; padding: 8px 0;">
+                                    <span style="font-size: 14px; font-weight: 700; color: #bf8970; width: 20px;">3</span>
+                                    <div class="avatar avatar-purple" style="width: 32px; height: 32px; font-size: 12px;">SM</div>
+                                    <div style="flex:1;"><span style="font-size: 13px; font-weight: 600;">Sakthi Mani</span></div>
+                                    <span style="font-size: 12px; color: #34a853; font-weight: 600;">10 trips</span>
+                                </div>
+                            </div>
+
+                            <div class="card" style="margin: 0 0 100px;">
+                                <h4 style="font-size: 14px; margin-bottom: 10px;">Revenue Breakdown</h4>
+                                <div class="fare-row"><span class="label">Hourly Bookings</span><span class="value">Rs 8,200 (44%)</span></div>
+                                <div class="fare-row"><span class="label">Daily Bookings</span><span class="value">Rs 7,800 (42%)</span></div>
+                                <div class="fare-row"><span class="label">Distance Charges</span><span class="value">Rs 2,500 (14%)</span></div>
+                                <div class="fare-total"><span>Total</span><span class="value" style="color: #2e7d32;">Rs 18,500</span></div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="bottom-nav">
+                        <div class="nav-item">
+                            <svg viewBox="0 0 24 24" fill="currentColor"><path d="M3 13h8V3H3v10zm0 8h8v-6H3v6zm10 0h8V11h-8v10zm0-18v6h8V3h-8z"/></svg>
+                            <span>Dashboard</span>
+                        </div>
+                        <div class="nav-item">
+                            <svg viewBox="0 0 24 24" fill="currentColor"><path d="M19 3h-1V1h-2v2H8V1H6v2H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm0 16H5V8h14v11z"/></svg>
+                            <span>Requests</span>
+                        </div>
+                        <div class="nav-item">
+                            <svg viewBox="0 0 24 24" fill="currentColor"><path d="M16 11c1.66 0 2.99-1.34 2.99-3S17.66 5 16 5c-1.66 0-3 1.34-3 3s1.34 3 3 3zm-8 0c1.66 0 2.99-1.34 2.99-3S9.66 5 8 5C6.34 5 5 6.34 5 8s1.34 3 3 3zm0 2c-2.33 0-7 1.17-7 3.5V19h14v-2.5c0-2.33-4.67-3.5-7-3.5zm8 0c-.29 0-.62.02-.97.05 1.16.84 1.97 1.97 1.97 3.45V19h6v-2.5c0-2.33-4.67-3.5-7-3.5z"/></svg>
+                            <span>Drivers</span>
+                        </div>
+                        <div class="nav-item active-green">
+                            <svg viewBox="0 0 24 24" fill="currentColor"><path d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zM9 17H7v-7h2v7zm4 0h-2V7h2v10zm4 0h-2v-4h2v4z"/></svg>
+                            <span>Reports</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function switchApp(app) {
+            document.querySelectorAll('.app-tab').forEach(t => t.classList.remove('active'));
+            document.querySelectorAll('.app-section').forEach(s => s.classList.remove('active'));
+            event.target.classList.add('active');
+            document.getElementById(app + '-app').classList.add('active');
+        }
+
+        function showScreen(group, index) {
+            const nav = document.getElementById(group + '-nav');
+            nav.querySelectorAll('.screen-btn').forEach((btn, i) => {
+                btn.classList.toggle('active', i === index);
+            });
+            // Find all screens in the same phone
+            const navParent = nav.parentElement;
+            navParent.querySelectorAll('.screen').forEach((screen, i) => {
+                screen.classList.toggle('active', i === index);
+            });
+        }
+    </script>
+</body>
+</html>
